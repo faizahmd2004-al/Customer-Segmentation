@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Segmentation</title>
+
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; padding: 0;
+            background: linear-gradient(to right, #f0f8ff, #d1e7f7);
+            color: #333;
+        }
+        h2 { text-align:center; padding:20px; color:#2c3e50; }
+        .container {
+            max-width: 800px;
+            margin:auto;
+            background:#fff; padding:30px;
+            border-radius:12px;
+            box-shadow:0 4px 20px rgba(0,0,0,0.1);
+        }
+        label { font-weight:bold; display:block; margin-top:15px; }
+        input { width:100%; padding:10px; margin-top:5px; border:1px solid #ccc; border-radius:8px; }
+        input::placeholder { font-size:14px; color:#999; }
+        button {
+            display:block; width:100%; margin-top:25px;
+            padding:14px; font-size:18px;
+            background-color:#007bff; color:white;
+            border:none; border-radius:10px;
+            cursor:pointer; transition:0.3s;
+        }
+        button:hover { background-color:#0056b3; }
+        #result { text-align:center; margin-top:20px; font-size:20px; font-weight:bold; color:#28a745; }
+    </style>
+</head>
+
+<body>
+<h2>Customer Segmentation</h2>
+
+<div class="container">
+    <!-- Input fields for 28 features -->
+    <label>Year_Birth:</label>
+    <input type="number" id="Year_Birth" placeholder="Enter Year_Birth">
+
+    <label>Education:</label>
+    <input type="number" id="Education" placeholder="Enter Education">
+
+    <label>Marital_Status:</label>
+    <input type="number" id="Marital_Status" placeholder="Enter Marital_Status">
+
+    <label>Income:</label>
+    <input type="number" id="Income" placeholder="Enter Income">
+
+    <label>Kidhome:</label>
+    <input type="number" id="Kidhome" placeholder="Enter Kidhome">
+
+    <label>Teenhome:</label>
+    <input type="number" id="Teenhome" placeholder="Enter Teenhome">
+
+    <label>Recency:</label>
+    <input type="number" id="Recency" placeholder="Enter Recency">
+
+    <label>MntWines:</label>
+    <input type="number" id="MntWines" placeholder="Enter MntWines">
+
+    <label>MntFruits:</label>
+    <input type="number" id="MntFruits" placeholder="Enter MntFruits">
+
+    <label>MntMeatProducts:</label>
+    <input type="number" id="MntMeatProducts" placeholder="Enter MntMeatProducts">
+
+    <label>MntFishProducts:</label>
+    <input type="number" id="MntFishProducts" placeholder="Enter MntFishProducts">
+
+    <label>MntSweetProducts:</label>
+    <input type="number" id="MntSweetProducts" placeholder="Enter MntSweetProducts">
+
+    <label>MntGoldProds:</label>
+    <input type="number" id="MntGoldProds" placeholder="Enter MntGoldProds">
+
+    <label>NumDealsPurchases:</label>
+    <input type="number" id="NumDealsPurchases" placeholder="Enter NumDealsPurchases">
+
+    <label>NumWebPurchases:</label>
+    <input type="number" id="NumWebPurchases" placeholder="Enter NumWebPurchases">
+
+    <label>NumCatalogPurchases:</label>
+    <input type="number" id="NumCatalogPurchases" placeholder="Enter NumCatalogPurchases">
+
+    <label>NumStorePurchases:</label>
+    <input type="number" id="NumStorePurchases" placeholder="Enter NumStorePurchases">
+
+    <label>NumWebVisitsMonth:</label>
+    <input type="number" id="NumWebVisitsMonth" placeholder="Enter NumWebVisitsMonth">
+
+    <label>AcceptedCmp1:</label>
+    <input type="number" id="AcceptedCmp1" placeholder="Enter AcceptedCmp1">
+
+    <label>AcceptedCmp2:</label>
+    <input type="number" id="AcceptedCmp2" placeholder="Enter AcceptedCmp2">
+
+    <label>AcceptedCmp3:</label>
+    <input type="number" id="AcceptedCmp3" placeholder="Enter AcceptedCmp3">
+
+    <label>AcceptedCmp4:</label>
+    <input type="number" id="AcceptedCmp4" placeholder="Enter AcceptedCmp4">
+
+    <label>AcceptedCmp5:</label>
+    <input type="number" id="AcceptedCmp5" placeholder="Enter AcceptedCmp5">
+
+    <label>Complain:</label>
+    <input type="number" id="Complain" placeholder="Enter Complain">
+
+    <label>Response:</label>
+    <input type="number" id="Response" placeholder="Enter Response">
+
+    <label>day:</label>
+    <input type="number" id="day" placeholder="Enter day">
+
+    <label>month:</label>
+    <input type="number" id="month" placeholder="Enter month">
+
+    <label>year:</label>
+    <input type="number" id="year" placeholder="Enter year">
+
+    <button onclick="predictCluster()">Predict Cluster</button>
+    <h3 id="result"></h3>
+</div>
+
+<script>
+function predictCluster() {
+    let data = {
+        Year_Birth: parseFloat(document.getElementById("Year_Birth").value) || 0,
+        Education: parseFloat(document.getElementById("Education").value) || 0,
+        Marital_Status: parseFloat(document.getElementById("Marital_Status").value) || 0,
+        Income: parseFloat(document.getElementById("Income").value) || 0,
+        Kidhome: parseFloat(document.getElementById("Kidhome").value) || 0,
+        Teenhome: parseFloat(document.getElementById("Teenhome").value) || 0,
+        Recency: parseFloat(document.getElementById("Recency").value) || 0,
+        MntWines: parseFloat(document.getElementById("MntWines").value) || 0,
+        MntFruits: parseFloat(document.getElementById("MntFruits").value) || 0,
+        MntMeatProducts: parseFloat(document.getElementById("MntMeatProducts").value) || 0,
+        MntFishProducts: parseFloat(document.getElementById("MntFishProducts").value) || 0,
+        MntSweetProducts: parseFloat(document.getElementById("MntSweetProducts").value) || 0,
+        MntGoldProds: parseFloat(document.getElementById("MntGoldProds").value) || 0,
+        NumDealsPurchases: parseFloat(document.getElementById("NumDealsPurchases").value) || 0,
+        NumWebPurchases: parseFloat(document.getElementById("NumWebPurchases").value) || 0,
+        NumCatalogPurchases: parseFloat(document.getElementById("NumCatalogPurchases").value) || 0,
+        NumStorePurchases: parseFloat(document.getElementById("NumStorePurchases").value) || 0,
+        NumWebVisitsMonth: parseFloat(document.getElementById("NumWebVisitsMonth").value) || 0,
+        AcceptedCmp1: parseFloat(document.getElementById("AcceptedCmp1").value) || 0,
+        AcceptedCmp2: parseFloat(document.getElementById("AcceptedCmp2").value) || 0,
+        AcceptedCmp3: parseFloat(document.getElementById("AcceptedCmp3").value) || 0,
+        AcceptedCmp4: parseFloat(document.getElementById("AcceptedCmp4").value) || 0,
+        AcceptedCmp5: parseFloat(document.getElementById("AcceptedCmp5").value) || 0,
+        Complain: parseFloat(document.getElementById("Complain").value) || 0,
+        Response: parseFloat(document.getElementById("Response").value) || 0,
+        day: parseFloat(document.getElementById("day").value) || 0,
+        month: parseFloat(document.getElementById("month").value) || 0,
+        year: parseFloat(document.getElementById("year").value) || 0
+    };
+
+    fetch("http://127.0.0.1:5000/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        if(result.cluster !== undefined){
+            document.getElementById("result").innerText = "Predicted Cluster: " + result.cluster;
+        } else {
+            document.getElementById("result").innerText = "Error: " + result.error;
+        }
+    })
+    .catch(err => {
+        document.getElementById("result").innerText = "Error: Unable to connect to server.";
+        console.error(err);
+    });
+}
+</script>
+
+</body>
+</html>
